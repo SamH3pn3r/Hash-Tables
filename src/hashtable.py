@@ -51,8 +51,20 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
 
+        current = self.storage[index]
+        last = None
+        while (current is not None and current.key != key):
+            last = current
+            current = last.next
+        
+        if (current is not None):
+            current.value = value
+        else:
+            new = LinkedPair(key, value)
+            new.next = self.storage[index]
+            self.storage[index] = new
 
 
     def remove(self, key):
@@ -63,7 +75,20 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        last = None
+        current = self.storage[index]
+        while (current is not None and current.key != key):
+            last = current
+            current = current.next
+        if (self.storage[index] is None):
+            print("Error! Couldn't find key.")
+        else:
+            # Removing the first element in the linkedlist
+            if (last is None):
+                self.storage[index] = current.next
+            else:
+                last.next = current.next
 
 
     def retrieve(self, key):
@@ -74,7 +99,13 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        index = self._hash_mod(key)
+        current = self.storage[index]
+        while current is not None:
+            if (current.key == key):
+                return current.value
+            current = current.next
+        
 
 
     def resize(self):
@@ -84,7 +115,17 @@ class HashTable:
 
         Fill this in.
         '''
-        pass
+        old_hash = self.storage
+        self.capacity *= 2
+        self.storage = [None] * self.capacity
+
+        current = None
+
+        for i in old_hash:
+            current = i
+            while (current is not None):
+                self.insert(current.key, current.value)
+                current = current.next
 
 
 
