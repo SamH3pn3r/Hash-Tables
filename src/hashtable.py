@@ -52,15 +52,18 @@ class HashTable:
         Fill this in.
         '''
         index = self._hash_mod(key)
-
         current = self.storage[index]
         last = None
+
+        # Try to find node already allocated with the same key
         while (current is not None and current.key != key):
             last = current
             current = last.next
         
+        # If a node is found with the same key
         if (current is not None):
             current.value = value
+        # if a node is not found
         else:
             new = LinkedPair(key, value)
             new.next = self.storage[index]
@@ -78,11 +81,15 @@ class HashTable:
         index = self._hash_mod(key)
         last = None
         current = self.storage[index]
+
+        # While the node isn't located, keep traversing
         while (current is not None and current.key != key):
             last = current
             current = current.next
+        # If the key couldn't be found
         if (self.storage[index] is None):
             print("Error! Couldn't find key.")
+        # if it is found
         else:
             # Removing the first element in the linkedlist
             if (last is None):
@@ -101,7 +108,10 @@ class HashTable:
         '''
         index = self._hash_mod(key)
         current = self.storage[index]
+
+        # While node is not found
         while current is not None:
+            # if the key matches
             if (current.key == key):
                 return current.value
             current = current.next
