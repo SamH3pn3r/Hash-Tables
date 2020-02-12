@@ -94,6 +94,7 @@ class HashTable:
             # Removing the first element in the linkedlist
             if (last is None):
                 self.storage[index] = current.next
+            # If the one you want to remove is in the middle
             else:
                 last.next = current.next
 
